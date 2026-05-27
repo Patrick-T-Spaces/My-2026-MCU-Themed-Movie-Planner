@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.H.I.E.L.D. Mission Briefing: Cinematic Timeline</title>
+    <style>
+        :root {
+            --bg-color: #121416;
+            --panel-color: #1a1d20;
+            --text-primary: #ffffff;
+            --text-secondary: #98a2b3;
+            --arc-blue: #00d2ff;
+            --arc-glow: rgba(0, 210, 255, 0.2);
+            --avenger-red: #e21b22;
+            --border-color: #2d3139;
+            --success-green: #00e676;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            background: var(--panel-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px var(--arc-glow);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px dashed var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+
+        header h1 span {
+            color: var(--arc-blue);
+            text-shadow: 0 0 8px var(--arc-blue);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* Input Form Grid */
+        .input-section {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 1fr auto;
+            gap: 12px;
+            margin-bottom: 25px;
+            align-items: end;
+        }
+
+        @media (max-width: 600px) {
+            .input-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--arc-blue);
+        }
+
+        input, select {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--arc-blue);
+            box-shadow: 0 0 5px var(--arc-blue);
+        }
+
+        button.btn-assemble {
+            background-color: transparent;
+            border: 1px solid var(--avenger-red);
+            color: var(--avenger-red);
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            height: 40px;
+        }
+
+        button.btn-assemble:hover {
+            background-color: var(--avenger-red);
+            color: white;
+            box-shadow: 0 0 10px rgba(226, 27, 34, 0.5);
+        }
+
+        /* Tracker List / Table */
+        .list-container {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .list-header {
+            display: grid;
+            grid-template-columns: 2.5fr 1.5fr 1.5fr 0.5fr;
+            background-color: rgba(255, 255, 255, 0.03);
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+        }
+
+        .movie-item {
+            display: grid;
+            grid-template-columns: 2.5fr 1.5fr 1.5fr 0.5fr;
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(45, 49, 57, 0.5);
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .movie-item:last-child {
+            border-bottom: none;
+        }
+
+        .movie-item:hover {
+            background-color: rgba(0, 210, 255, 0.02);
+        }
+
+        .movie-title {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .movie-date {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+            width: fit-content;
+        }
+
+        .status-badge.priority-10 {
+            background-color: rgba(226, 27, 34, 0.15);
+            color: var(--avenger-red);
+            border: 1px solid var(--avenger-red);
+        }
+
+        .status-badge.priority-stream {
+            background-color: rgba(0, 210, 255, 0.15);
+            color: var(--arc-blue);
+            border: 1px solid var(--arc-blue);
+        }
+
+        .action-cell {
+            text-align: right;
+        }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+
+        .delete-btn:hover {
+            color: var(--avenger-red);
+        }
+
+        /* Empty State */
+        .empty-state {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1><span>S.H.I.E.L.D.</span> Mission Tracker</h1>
+        <p>Cinematic Operations Timeline & Deployment Planner</p>
+    </header>
+
+    <!-- Inputs to Add Custom Movies -->
+    <div class="input-section">
+        <div class="form-group">
+            <label for="movieTitle">Target Intel (Movie Name)</label>
+            <input type="text" id="movieTitle" placeholder="e.g., Avengers: Doomsday">
+        </div>
+        <div class="form-group">
+            <label for="movieDate">Deployment Date</label>
+            <input type="date" id="movieDate">
+        </div>
+        <div class="form-group">
+            <label for="moviePriority">Priority Status</label>
+            <select id="moviePriority">
+                <option value="Level 10 (Opening Night)">Level 10</option>
+                <option value="Streaming / Digital">Streaming</option>
+            </select>
+        </div>
+        <button class="btn-assemble" onclick="addMovie()">Assemble</button>
+    </div>
+
+    <!-- The Tracker List Display -->
+    <div class="list-container">
+        <div class="list-header">
+            <div>Target Name</div>
+            <div>Estimated Arrival</div>
+            <div>Clearance / Priority</div>
+            <div style="text-align: right;">Purge</div>
+        </div>
+        <div id="timelineList">
+            <!-- Movie entries will inject here dynamically -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // Pre-populate with confirmed Phase 6 Cinematic Schedule
+    let watchlist = [
+        { title: "Spider-Man: Brand New Day", date: "2026-07-31", priority: "Level 10 (Opening Night)" },
+        { title: "Avengers: Doomsday", date: "2026-12-18", priority: "Level 10 (Opening Night)" },
+        { title: "Avengers: Secret Wars", date: "2027-12-17", priority: "Level 10 (Opening Night)" }
+    ];
+
+    // Load data from browser memory if it exists from previous uses
+    if (localStorage.getItem("mcuWatchlist")) {
+        watchlist = JSON.parse(localStorage.getItem("mcuWatchlist"));
+    }
+
+    function saveToMemory() {
+        localStorage.setItem("mcuWatchlist", JSON.stringify(watchlist));
+    }
+
+    function formatDate(dateString) {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const date = new Date(dateString);
+        // Fallback to text string if system date parses incorrectly
+        return isNaN(date) ? dateString : date.toLocaleDateString('en-US', options);
+    }
+
+    function renderTimeline() {
+        const displayContainer = document.getElementById("timelineList");
+        displayContainer.innerHTML = "";
+
+        if (watchlist.length === 0) {
+            displayContainer.innerHTML = `<div class="empty-state">No targets designated in the mainframe. Insert data above.</div>`;
+            return;
+        }
+
+        // Sort items chronologically by date
+        watchlist.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        watchlist.forEach((movie, index) => {
+            const isStream = movie.priority.includes("Streaming");
+            const badgeClass = isStream ? "priority-stream" : "priority-10";
+
+            const rowHTML = `
+                <div class="movie-item">
+                    <div class="movie-title">${movie.title}</div>
+                    <div class="movie-date">${formatDate(movie.date)}</div>
+                    <div><span class="status-badge ${badgeClass}">${movie.priority}</span></div>
+                    <div class="action-cell">
+                        <button class="delete-btn" onclick="deleteMovie(${index})">&times;</button>
+                    </div>
+                </div>
+            `;
+            displayContainer.innerHTML += rowHTML;
+        });
+    }
+
+    function addMovie() {
+        const titleInput = document.getElementById("movieTitle");
+        const dateInput = document.getElementById("movieDate");
+        const priorityInput = document.getElementById("moviePriority");
+
+        if (!titleInput.value || !dateInput.value) {
+            alert("S.H.I.E.L.D. error: You must provide both a Title and a valid Date to register a target.");
+            return;
+        }
+
+        const newMovie = {
+            title: titleInput.value.trim(),
+            date: dateInput.value,
+            priority: priorityInput.value
+        };
+
+        watchlist.push(newMovie);
+        saveToMemory();
+        renderTimeline();
+
+        // Clear input inputs for the next entry
+        titleInput.value = "";
+        dateInput.value = "";
+    }
+
+    function deleteMovie(index) {
+        watchlist.splice(index, 1);
+        saveToMemory();
+        renderTimeline();
+    }
+
+    // Initialize display on startup
+    renderTimeline();
+</script>
+
+</body>
+</html>
