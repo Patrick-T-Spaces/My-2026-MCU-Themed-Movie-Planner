@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.H.I.E.L.D. Mission Briefing: Cinematic Timeline</title>
+    <title>snPG '26 Movie Tracker</title>
     <style>
         :root {
             --bg-color: #121416;
@@ -72,13 +72,13 @@
         /* Input Form Grid */
         .input-section {
             display: grid;
-            grid-template-columns: 2fr 1.5fr 1fr auto;
+            grid-template-columns: 2fr 1.5fr 1.5fr auto;
             gap: 12px;
             margin-bottom: 25px;
             align-items: end;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 650px) {
             .input-section {
                 grid-template-columns: 1fr;
             }
@@ -106,6 +106,7 @@
             font-size: 0.95rem;
             outline: none;
             transition: border 0.3s, box-shadow 0.3s;
+            width: 100%;
         }
 
         input:focus, select:focus {
@@ -143,7 +144,7 @@
 
         .list-header {
             display: grid;
-            grid-template-columns: 2.5fr 1.5fr 1.5fr 0.5fr;
+            grid-template-columns: 2fr 1.2fr 1.8fr 0.4fr;
             background-color: rgba(255, 255, 255, 0.03);
             padding: 12px 16px;
             border-bottom: 1px solid var(--border-color);
@@ -153,13 +154,26 @@
             color: var(--text-secondary);
         }
 
+        @media (max-width: 500px) {
+            .list-header {
+                grid-template-columns: 1.5fr 1fr 1.5fr 0.4fr;
+                font-size: 0.75rem;
+            }
+        }
+
         .movie-item {
             display: grid;
-            grid-template-columns: 2.5fr 1.5fr 1.5fr 0.5fr;
+            grid-template-columns: 2fr 1.2fr 1.8fr 0.4fr;
             padding: 14px 16px;
             border-bottom: 1px solid rgba(45, 49, 57, 0.5);
             align-items: center;
             transition: background 0.2s;
+        }
+
+        @media (max-width: 500px) {
+            .movie-item {
+                grid-template-columns: 1.5fr 1fr 1.5fr 0.4fr;
+            }
         }
 
         .movie-item:last-child {
@@ -175,32 +189,78 @@
             font-size: 1rem;
         }
 
+        @media (max-width: 500px) {
+            .movie-title {
+                font-size: 0.85rem;
+            }
+        }
+
         .movie-date {
             color: var(--text-secondary);
             font-size: 0.95rem;
         }
 
+        @media (max-width: 500px) {
+            .movie-date {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Custom Themed Clearance Badges */
         .status-badge {
             display: inline-block;
-            padding: 4px 8px;
+            padding: 4px 10px;
             border-radius: 4px;
             font-size: 0.75rem;
             font-weight: bold;
             text-transform: uppercase;
             text-align: center;
             width: fit-content;
+            letter-spacing: 0.5px;
         }
 
-        .status-badge.priority-10 {
+        @media (max-width: 500px) {
+            .status-badge {
+                font-size: 0.65rem;
+                padding: 3px 6px;
+            }
+        }
+
+        /* CLASS S: IMAX Paragon (Iconic Avenger Red) */
+        .status-badge.priority-classS {
             background-color: rgba(226, 27, 34, 0.15);
-            color: var(--avenger-red);
-            border: 1px solid var(--avenger-red);
+            color: #e21b22;
+            border: 1px solid #e21b22;
+            text-shadow: 0 0 5px rgba(226, 27, 34, 0.3);
         }
 
-        .status-badge.priority-stream {
+        /* LEVEL 10: Must Watch (Loki Mischief Green) */
+        .status-badge.priority-level10 {
+            background-color: rgba(73, 169, 66, 0.15);
+            color: #49A942;
+            border: 1px solid #49A942;
+            text-shadow: 0 0 4px rgba(73, 169, 66, 0.2);
+        }
+
+        /* LEVEL 5: Only If Possible (Asgardian Gold) */
+        .status-badge.priority-level5 {
+            background-color: rgba(226, 177, 60, 0.15);
+            color: #E2B13C;
+            border: 1px solid #E2B13C;
+        }
+
+        /* CLASS O: Streaming/Digital (Arc Reactor Blue) */
+        .status-badge.priority-classO {
             background-color: rgba(0, 210, 255, 0.15);
-            color: var(--arc-blue);
-            border: 1px solid var(--arc-blue);
+            color: #00d2ff;
+            border: 1px solid #00d2ff;
+        }
+
+        /* CLASS N: Own Discretion (Vibranium Slate Gray) */
+        .status-badge.priority-classN {
+            background-color: rgba(90, 101, 120, 0.15);
+            color: #8A97A8;
+            border: 1px solid #5A6578;
         }
 
         .action-cell {
@@ -220,7 +280,6 @@
             color: var(--avenger-red);
         }
 
-        /* Empty State */
         .empty-state {
             padding: 40px;
             text-align: center;
@@ -233,15 +292,15 @@
 
 <div class="container">
     <header>
-        <h1><span>snPG</span> '26 Movie Tracker</h1>
+        <h1><span>snPG '26</span> Movie Tracker</h1>
         <p>Cinematic Operations Timeline & Deployment Planner</p>
     </header>
 
-    <!-- Inputs to Add Custom Movies -->
+    <!-- Interactive Custom Input Grid -->
     <div class="input-section">
         <div class="form-group">
             <label for="movieTitle">Target Intel (Movie Name)</label>
-            <input type="text" id="movieTitle" placeholder="e.g., Avengers: Doomsday">
+            <input type="text" id="movieTitle" placeholder="e.g., Blade">
         </div>
         <div class="form-group">
             <label for="movieDate">Deployment Date</label>
@@ -250,7 +309,7 @@
         <div class="form-group">
             <label for="moviePriority">Priority Status</label>
             <select id="moviePriority">
-                <option value="Class S (IMAX Paragon/ Best System and Seat)">Class S</option>
+                <option value="IMAX Paragon/ Best System and Seat">Class S</option>
                 <option value="Level 10 (Must Watch)">Level 10</option>
                 <option value="Level 5 (Only if possible)">Level 5</option>
                 <option value="Streaming / Digital">Class O</option>
@@ -260,7 +319,7 @@
         <button class="btn-assemble" onclick="addMovie()">Assemble</button>
     </div>
 
-    <!-- The Tracker List Display -->
+    <!-- Main Dynamic Tracking Grid -->
     <div class="list-container">
         <div class="list-header">
             <div>Target Name</div>
@@ -269,20 +328,29 @@
             <div style="text-align: right;">Purge</div>
         </div>
         <div id="timelineList">
-            <!-- Movie entries will inject here dynamically -->
+            <!-- Data Rows injected dynamically -->
         </div>
     </div>
 </div>
 
 <script>
-    // Pre-populate with confirmed Phase 6 Cinematic Schedule
+    // All 12 custom movies integrated as permanent baseline items
     let watchlist = [
+        { title: "Masters of the Universe", date: "2026-06-03", priority: "Level 5 (Only if possible)" },
+        { title: "Disclosure Day", date: "2026-06-10", priority: "Level 10 (Must Watch)" },
+        { title: "Toy Story 5", date: "2026-06-18", priority: "Level 5 (Only if possible)" },
+        { title: "Supergirl", date: "2026-06-24", priority: "Level 5 (Only if possible)" },
+        { title: "The Odyssey", date: "2026-07-16", priority: "Level 5 (Only if possible)" },
         { title: "Spider-Man: Brand New Day", date: "2026-07-29", priority: "IMAX Paragon/ Best System and Seat" },
+        { title: "Avengers: Endgame (Re-Release)", date: "2026-09-24", priority: "Level 10 (Must Watch)" },
+        { title: "Clayface", date: "2026-10-22", priority: "Level 5 (Only if possible)" },
+        { title: "The Hunger Games Sunrise on the Reaping", date: "2026-11-19", priority: "Level 5 (Only if possible)" },
         { title: "Avengers: Doomsday", date: "2026-12-17", priority: "IMAX Paragon/ Best System and Seat" },
+        { title: "Jumanji Open World", date: "2026-12-24", priority: "Streaming / Digital" },
         { title: "Avengers: Secret Wars", date: "2027-12-16", priority: "IMAX Paragon/ Best System and Seat" }
     ];
 
-    // Load data from browser memory if it exists from previous uses
+    // Load custom sessions local memory additions if they exist
     if (localStorage.getItem("mcuWatchlist")) {
         watchlist = JSON.parse(localStorage.getItem("mcuWatchlist"));
     }
@@ -294,7 +362,6 @@
     function formatDate(dateString) {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         const date = new Date(dateString);
-        // Fallback to text string if system date parses incorrectly
         return isNaN(date) ? dateString : date.toLocaleDateString('en-US', options);
     }
 
@@ -307,12 +374,22 @@
             return;
         }
 
-        // Sort items chronologically by date
+        // Sort timeline automatically chronologically by date
         watchlist.sort((a, b) => new Date(a.date) - new Date(b.date));
 
         watchlist.forEach((movie, index) => {
-            const isStream = movie.priority.includes("Streaming");
-            const badgeClass = isStream ? "priority-stream" : "priority-10";
+            // Determine dynamic badge colors matching user specification strings
+            let badgeClass = "priority-classN"; 
+            
+            if (movie.priority.includes("IMAX Paragon") || movie.priority.includes("Class S")) {
+                badgeClass = "priority-classS";
+            } else if (movie.priority.includes("Level 10")) {
+                badgeClass = "priority-level10";
+            } else if (movie.priority.includes("Level 5")) {
+                badgeClass = "priority-level5";
+            } else if (movie.priority.includes("Streaming") || movie.priority.includes("Class O")) {
+                badgeClass = "priority-classO";
+            }
 
             const rowHTML = `
                 <div class="movie-item">
@@ -334,7 +411,7 @@
         const priorityInput = document.getElementById("moviePriority");
 
         if (!titleInput.value || !dateInput.value) {
-            alert("S.H.I.E.L.D. error: You must provide both a Title and a valid Date to register a target.");
+            alert("Error: Missing target metrics. Fill in movie name and date to assemble.");
             return;
         }
 
@@ -348,7 +425,6 @@
         saveToMemory();
         renderTimeline();
 
-        // Clear input inputs for the next entry
         titleInput.value = "";
         dateInput.value = "";
     }
@@ -359,7 +435,7 @@
         renderTimeline();
     }
 
-    // Initialize display on startup
+    // Initialize layout setup on boot
     renderTimeline();
 </script>
 
